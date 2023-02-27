@@ -62,7 +62,8 @@ export function createTRPCClient<Router extends AnyRouter>(
     link = httpBatchLink({ url: `${origin}${url}`, fetch, headers });
   } else {
     const fetch = init?.fetch ?? window.fetch;
-    link = httpBatchLink({ url: `${location.origin}${url}`, fetch, headers });
+    const origin = init?.origin ?? location.origin
+    link = httpBatchLink({ url: `${origin}${url}`, fetch, headers });
   }
 
   return createTRPCProxyClient<Router>({ transformer, links: [link] });
